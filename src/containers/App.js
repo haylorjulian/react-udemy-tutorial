@@ -1,22 +1,22 @@
-import React, { PureComponent } from 'react';
-import classes from './App.css';
+import React, { PureComponent } from "react";
+import classes from "./App.css";
 // import Radium, { StyleRoot } from 'radium';
-import Persons from '../components/Persons/Persons';
-import Cockpit from '../components/Cockpit/Cockpit'
-import Aux from '../hoc/Aux';
-import WithClass from '../hoc/WithClass';
-import AlternativeWithClass from '../hoc/AlternativeWithClass'
-import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
+import Persons from "../components/Persons/Persons";
+import Cockpit from "../components/Cockpit/Cockpit";
+import Aux from "../hoc/Aux";
+import WithClass from "../hoc/WithClass";
+import AlternativeWithClass from "../hoc/AlternativeWithClass";
+import ErrorBoundary from "../ErrorBoundary/ErrorBoundary";
 
 class App extends PureComponent {
   constructor(props) {
     super(props);
-    console.log('[App.js] inside constructor', props);
+    console.log("[App.js] inside constructor", props);
     this.state = {
       persons: [
-        { id: 'sdaaf3', name: 'Max', age: 28},
-        { id: 'sbbs903', name: 'Manu', age: 29},
-        { id: 'sbs3820', name: 'Stephanie', age: 26}
+        { id: "sdaaf3", name: "Max", age: 28 },
+        { id: "sbbs903", name: "Manu", age: 29 },
+        { id: "sbs3820", name: "Stephanie", age: 26 }
       ],
       showPersons: false,
       toggleClicked: 0
@@ -24,11 +24,11 @@ class App extends PureComponent {
   }
 
   componentWillMount() {
-    console.log('[App.js] inside componentWillMount()');
+    console.log("[App.js] inside componentWillMount()");
   }
 
   componentDidMount() {
-    console.log('[App.js] inside componentDidMount')
+    console.log("[App.js] inside componentDidMount");
   }
 
   // shouldComponentUpdate(nextProps, nextState) {
@@ -39,11 +39,15 @@ class App extends PureComponent {
   // }
 
   componentWillUpdate(nextProps, nextState) {
-    console.log('[Update App.js] inside componentWillUpdate()', nextProps, nextState);
+    console.log(
+      "[Update App.js] inside componentWillUpdate()",
+      nextProps,
+      nextState
+    );
   }
 
   componentDidUpdate() {
-    console.log('[Update App.js] inside componentDidUpdate()');
+    console.log("[Update App.js] inside componentDidUpdate()");
   }
 
   // New React syntax for declaring the state object
@@ -66,14 +70,14 @@ class App extends PureComponent {
   //   });
   // };
 
-  deletePersonHandler = (personIndex) => {
+  deletePersonHandler = personIndex => {
     // By using slice(), we create a copy of state.persons and return a new one - which is then stored in const persons
     // const persons = this.state.persons.slice();
 
     // The spread operator is an alternative/equivalent to the slice() method above (ES6 feature)
     const persons = [...this.state.persons];
     persons.splice(personIndex, 1);
-    this.setState({persons: persons});
+    this.setState({ persons: persons });
   };
 
   nameChangedHandler = (event, id) => {
@@ -113,26 +117,26 @@ class App extends PureComponent {
 
   togglePersonsHandler = () => {
     const doesShow = this.state.showPersons;
-    this.setState( (prevState, props) => {
+    this.setState((prevState, props) => {
       return {
         showPersons: !doesShow,
         toggleClicked: prevState.toggleClicked + 1
-      }
+      };
     });
   };
 
   render() {
-    console.log('[App.js] inside render()');
+    console.log("[App.js] inside render()");
     // const style = {
     //   backgroundColor: 'green',
     //   font: 'inherit',
     //   border: '1px solid blue',
     //   padding: '8px',
     //   cursor: 'pointer'
-      // ':hover': {
-      //   backgroundColor: 'lightgreen',
-      //   color: 'black'
-      // }
+    // ':hover': {
+    //   backgroundColor: 'lightgreen',
+    //   color: 'black'
+    // }
     // };
 
     let persons = null;
@@ -140,25 +144,35 @@ class App extends PureComponent {
     // The map function is a JS function that maps every function in a given area into something else
     // in this case a Person component
     if (this.state.showPersons) {
-      persons = <Persons
-              persons={this.state.persons}
-              clicked={this.deletePersonHandler}
-              changed={this.nameChangedHandler} />
+      persons = (
+        <Persons
+          persons={this.state.persons}
+          clicked={this.deletePersonHandler}
+          changed={this.nameChangedHandler}
+        />
+      );
     }
 
     return (
       // <StyleRoot>
-        // <WithClass classes={classes.App}>
-        <Aux>
-          <button onClick={() => {this.setState({showPersons: true})}}>Show Person</button>
-          <Cockpit
-              appTitle={this.props.title}
-              persons={this.state.persons}
-              showPersons={this.state.showPersons}
-              clicked={this.togglePersonsHandler}/>
-          {persons}
-        </Aux>
-        // </WithClass>
+      // <WithClass classes={classes.App}>
+      <Aux>
+        <button
+          onClick={() => {
+            this.setState({ showPersons: true });
+          }}
+        >
+          Show Person
+        </button>
+        <Cockpit
+          appTitle={this.props.title}
+          persons={this.state.persons}
+          showPersons={this.state.showPersons}
+          clicked={this.togglePersonsHandler}
+        />
+        {persons}
+      </Aux>
+      // </WithClass>
       // </StyleRoot>
     );
   }
