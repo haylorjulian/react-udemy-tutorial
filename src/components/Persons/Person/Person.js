@@ -10,6 +10,8 @@ import AlternativeWithClass from '../../../hoc/AlternativeWithClass';
 class Person extends Component {
   constructor(props) {
     super(props);
+    // New React 16.3+ syntax for ref
+    this.inputElement = React.createRef();
     console.log('[Person.js] inside constructor', props);
   }
 
@@ -21,9 +23,15 @@ class Person extends Component {
     console.log('[Person.js] inside componentDidMount()');
     // focus() is available for inputElement
     if (this.props.position === 0) {
-      this.inputElement.focus();
+      // this.inputElement.focus();
+      // Following is new React 16.3+ syntax for ref
+      this.inputElement.current.focus();
     }
   }
+
+  focus () {
+    this.inputElement.current.focus();
+  };
 
   render() {
     console.log('[Person.js] inside render()');
@@ -35,7 +43,9 @@ class Person extends Component {
           {/*We listen to changes and reflect the value from the start with value = props.name*/}
           <input
               // ref is a special property available in React stateful components
-              ref={(inp) => { this.inputElement = inp}}
+              // ref={(inp) => { this.inputElement = inp}}
+              // Following is new React 16.3+ syntax for ref
+              ref={this.inputElement}
               type="text"
               onChange={this.props.changed}
               value={this.props.name} />
